@@ -459,6 +459,20 @@ class Client
     }
 
     /**
+     * Get data of contacts that are in a contact list
+     *
+     * @param string $listId
+     * @param array $data
+     * @return Response
+     * @throws ClientException
+     * @throws ServerException
+     */
+    public function getContactsDataFromContactList($listId, array $data)
+    {
+        return $this->send(HttpClient::GET, sprintf('contactlist/%s/contacts/data', $listId), $data);
+    }
+
+    /**
      * Checks whether a specific contact is included in the defined contact list.
      *
      * @param int $contactId
@@ -897,6 +911,9 @@ class Client
     {
         $headers = array('Content-Type: application/json', 'X-WSSE: ' . $this->getAuthenticationSignature());
         $uri = $this->baseUrl . $uri;
+        if ('GET' == $method) {
+            $uri .= '/';
+        }
 
         try {
             $responseJson = $this->client->send($method, $uri, $headers, $body);

@@ -78,7 +78,7 @@ class CurlClient implements HttpClient
     private function updateUri($method, $uri, array $body)
     {
         if (self::GET == $method) {
-            $uri .= '/' . http_build_query($body);
+            $uri .= '?' . http_build_query($body);
         }
 
         return $uri;
